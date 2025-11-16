@@ -1,35 +1,26 @@
-// Auteur : Ahmed Boukra Bettayeb
-// Version : 3.0
-// Date : 08/11/2025
-// Classe Cercle - Declaration
 #ifndef DEF_CERCLE
 #define DEF_CERCLE
 
 #pragma once
-#include <iostream>
 #include "Ellipse.h"
 
 class Cercle : public Ellipse {
 private:
     double rayon;
-
 public:
-    // Constructeur
     Cercle();
     Cercle(double r);
     ~Cercle();
 
-    // Getter
-    double getRayon() const;
+    void SaisirDimension() override;
+    void SaisirDimension(double _dim1) override;
+    void SaisirDimension(double _dim1, double _dim2) override;
+    void SaisirDimension(double _dim1, double _dim2, double _dim3) override;
 
-    // Methodes
-    double getSurface() const;
-    double getPerimetre() const;
+    double getSurface() const override;
+    double getPerimetre() const override;
 
-    //compteur
-
+    double getRayon() const { return rayon; }
 };
 
 #endif
-
-

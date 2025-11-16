@@ -1,49 +1,72 @@
-// Auteur : Ahmed Boukra Bettayeb
-// Version : 3.0
-// Date : 04/11/2025
-// Classe Carre - Implementation
-
-//#include "stdafx.h"
 #include "Carre.h"
 #include <iostream>
 using namespace std;
 
-// Constructeur
-Carre::Carre() : Rectangle(0.0, 0.0){
-   this->SaisirDimension();
+// ===== Définition du compteur statique =====
+int Carre::compteurCarre = 0;
+
+// ===== Fonctions statiques =====
+void Carre::incrementerCompteur() { compteurCarre++; }
+void Carre::decrementerCompteur() { compteurCarre--; }
+int Carre::getCompteurCarre() { return compteurCarre; }
+
+// ===== Constructeur par défaut (OBLIGATOIRE) =====
+Carre::Carre() : Rectangle(1, 1)
+{
+    incrementerCompteur();
+    forme::incrementerFormes();
+
+    cout << "Creation d'un Carre (defaut). Compteur : " << compteurCarre
+         << ", total formes : " << forme::compteurFormes << endl;
 }
 
-Carre::Carre(double mCote) : Rectangle(mCote, mCote){
-   this->cote = mCote;
+// ===== Constructeur avec côté =====
+Carre::Carre(double cote) : Rectangle(cote, cote)
+{
+    incrementerCompteur();
+    forme::incrementerFormes();
+
+    cout << "Creation d'un Carre. Compteur : " << compteurCarre
+         << ", total formes : " << forme::compteurFormes << endl;
 }
 
-//destructeur
-Carre::~Carre() {
-    cout << " Destruction d'un objet de type Carre " << endl;
+// ===== Destructeur =====
+Carre::~Carre()
+{
+    decrementerCompteur();
+    forme::decrementerFormes();
+
+    cout << "Suppression d'un Carre. Restants : " << compteurCarre
+         << ", total formes : " << forme::compteurFormes << endl;
 }
+
+// ===== Saisies =====
 void Carre::SaisirDimension()
 {
-	double mCote;
+    double c;
+    do {
+        cout << "Cote du carre : ";
+        cin >> c;
+    } while (c <= 0);
 
-	do
-	{
-		cout << "Entrez la longueur du cote du carre: \n" << endl;
-		cin >> mCote;
-	} while(mCote < 0.0);
-
-	this->cote = mCote;
-	this->setLongueur(this->cote);
-	this->setLargeur(this->cote);
-	this->CalculerSurface();
-	this->CalculerPerimetre();
+    this->setLongueur(c);
+    this->setLargeur(c);
 }
 
-void Carre::SaisirDimension(double a)
+void Carre::SaisirDimension(double _dim1)
 {
-	this->cote = a;
-	this->setLongueur(this->cote);
-	this->setLargeur(this->cote);
-	this->CalculerSurface();
-	this->CalculerPerimetre();
+    this->setLongueur(_dim1);
+    this->setLargeur(_dim1);
 }
 
+void Carre::SaisirDimension(double _dim1, double _dim2)
+{
+    // Un carré : un seul côté, on ignore _dim2
+    this->setLongueur(_dim1);
+    this->setLargeur(_dim1);
+}
+
+void Carre::SaisirDimension(double, double, double)
+{
+    // Obligatoire même vide sinon le linker plante
+}

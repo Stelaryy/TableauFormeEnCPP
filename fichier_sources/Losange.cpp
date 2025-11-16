@@ -1,156 +1,76 @@
-// Auteur : Ahmed Boukra Bettayeb
-// Version : 2.1
-// Date : 14/10/2025
-// Classe Losange - Implémentation
-
 #include "Losange.h"
 #include <iostream>
 #include <cmath>
 #include <stdexcept>
-
 using namespace std;
 
 constexpr double PI = 3.14159265358979323846;
 
-// -----------------------------
-// Constructeurs
-// -----------------------------
-
-// Constructeur par défaut (saisie du côté et de l’angle)
-Losange::Losange() {
+Losange::Losange() : d1(0), d2(0), cote(0), angle(0), surface(0), perimetre(0) {
     SaisirCote();
     SaisirAngle();
-
-    // Calcul automatique des diagonales
-    d1 = 2 * cote * sin(angle / 2);
-    d2 = 2 * cote * cos(angle / 2);
-
-    // Calculs géométriques
-    surface = cote * cote * sin(angle);
-    perimetre = 4 * cote;
-
-    cout << "Creation d'un losange (cote + angle saisis)." << endl;
+    d1 = 2 * cote * sin(angle/2);
+    d2 = 2 * cote * cos(angle/2);
+    CalculerSurface(); CalculerPerimetre();
+    cout << "Creation d'un Losange (cote+angle). total formes=" << forme::compteurFormes << endl;
 }
 
-// Constructeur via diagonales
-Losange::Losange(bool fromDiagonales) {
+Losange::Losange(bool fromDiagonales) : d1(0), d2(0), cote(0), angle(0), surface(0), perimetre(0) {
     if (fromDiagonales) {
-        SaisirDiagonal1();
-        SaisirDiagonal2();
-
-        cote = sqrt(pow(d1 / 2, 2) + pow(d2 / 2, 2));
-        surface = (d1 * d2) / 2.0;
-        perimetre = 4 * cote;
-
-        cout << "Creation d un losange via diagonales." << endl;
+        SaisirDiagonal1(); SaisirDiagonal2();
+        cote = sqrt((d1/2)*(d1/2) + (d2/2)*(d2/2));
+        CalculerSurface(); CalculerPerimetre();
     } else {
-        SaisirCote();
-        SaisirAngle();
-
-        d1 = 2 * cote * sin(angle / 2);
-        d2 = 2 * cote * cos(angle / 2);
-        surface = cote * cote * sin(angle);
-        perimetre = 4 * cote;
-
-        cout << "Creation d un losange via cote + angle." << endl;
+        SaisirCote(); SaisirAngle();
+        d1 = 2 * cote * sin(angle/2);
+        d2 = 2 * cote * cos(angle/2);
+        CalculerSurface(); CalculerPerimetre();
     }
+    cout << "Creation d'un Losange. total formes=" << forme::compteurFormes << endl;
 }
 
-// Destructeur
 Losange::~Losange() {
-    cout << "Destruction d un objet Losange." << endl;
+    cout << "Destruction d'un Losange." << endl;
 }
 
-// -----------------------------
-// Setters protégés
-// -----------------------------
-void Losange::setDiagonal1(double Diagonal1) {
-    if (Diagonal1 <= 0)
-        throw invalid_argument("La diagonale 1 doit etre positive.");
-    d1 = Diagonal1;
+void Losange::setDiagonal1(double d) { if (d<=0) throw invalid_argument("d>0"); d1 = d; }
+void Losange::setDiagonal2(double d) { if (d<=0) throw invalid_argument("d>0"); d2 = d; }
+void Losange::setCote(double c) { if (c<=0) throw invalid_argument("c>0"); cote = c; }
+void Losange::setAngle(double a) { if (a<=0 || a>=PI) throw invalid_argument("angle"); angle = a; }
+
+void Losange::SaisirDiagonal1() { double x; do { cout<<"d1 (>0): "; cin>>x; } while(x<=0); d1 = x; }
+void Losange::SaisirDiagonal2() { double x; do { cout<<"d2 (>0): "; cin>>x; } while(x<=0); d2 = x; }
+void Losange::SaisirCote() { double x; do { cout<<"cote (>0): "; cin>>x; } while(x<=0); cote = x; }
+void Losange::SaisirAngle() { double deg; do { cout<<"angle deg (0<deg<180): "; cin>>deg; } while(deg<=0||deg>=180); angle = deg * PI / 180.0; }
+
+void Losange::CalculerSurface(){ surface = cote * cote * sin(angle); }
+void Losange::CalculerPerimetre(){ perimetre = 4 * cote; }
+
+void Losange::SaisirDimension() {
+    SaisirCote(); SaisirAngle();
+    d1 = 2 * cote * sin(angle/2);
+    d2 = 2 * cote * cos(angle/2);
+    CalculerSurface(); CalculerPerimetre();
 }
 
-void Losange::setDiagonal2(double Diagonal2) {
-    if (Diagonal2 <= 0)
-        throw invalid_argument("La diagonale 2 doit etre positive.");
-    d2 = Diagonal2;
-}
-
-void Losange::setCote(double _Cote) {
-    if (_Cote <= 0)
-        throw invalid_argument("Le cote doit etre positif.");
-    cote = _Cote;
-}
-
-void Losange::setAngle(double Angle) {
-    if (Angle <= 0 || Angle >= PI)
-        throw invalid_argument("L angle doit etre compris entre 0 et 180 degres.");
-    angle = Angle;
-}
-
-// -----------------------------
-// Méthodes privées de saisie
-// -----------------------------
-void Losange::SaisirDiagonal1() {
-    do {
-        cout << "Entrez la premiere diagonale (d1 > 0) : ";
-        cin >> d1;
-    } while (d1 <= 0);
-}
-
-void Losange::SaisirDiagonal2() {
-    do {
-        cout << "Entrez la deuxieme diagonale (d2 > 0) : ";
-        cin >> d2;
-    } while (d2 <= 0);
-}
-
-void Losange::SaisirCote() {
-    do {
-        cout << "Entrez la longueur du cote (c > 0) : ";
-        cin >> cote;
-    } while (cote <= 0);
-}
-
-void Losange::SaisirAngle() {
-    double deg;
-    do {
-        cout << "Entrez l angle en degres (0 < angle < 180) : ";
-        cin >> deg;
-    } while (deg <= 0 || deg >= 180);
-    angle = deg * PI / 180.0; // conversion en radians
-}
-
-// -----------------------------
-// Méthodes publiques héritées
-// -----------------------------
 void Losange::SaisirDimension(double _dim1) {
-    // Saisie par côté uniquement → demande de l’angle ensuite
     setCote(_dim1);
     SaisirAngle();
-
-    // Recalcul complet
-    d1 = 2 * cote * sin(angle / 2);
-    d2 = 2 * cote * cos(angle / 2);
-    surface = cote * cote * sin(angle);
-    perimetre = 4 * cote;
+    d1 = 2 * cote * sin(angle/2);
+    d2 = 2 * cote * cos(angle/2);
+    CalculerSurface(); CalculerPerimetre();
 }
 
 void Losange::SaisirDimension(double _dim1, double _dim2) {
-    // Saisie par diagonales
     setDiagonal1(_dim1);
     setDiagonal2(_dim2);
-
-    // Calculs géométriques
-    cote = sqrt(pow(_dim1 / 2, 2) + pow(_dim2 / 2, 2));
-    surface = (_dim1 * _dim2) / 2.0;
-    perimetre = 4 * cote;
+    cote = sqrt((d1/2)*(d1/2) + (d2/2)*(d2/2));
+    CalculerSurface(); CalculerPerimetre();
 }
 
-double Losange::getSurface() const {
-    return surface;
+void Losange::SaisirDimension(double, double, double) {
+    // no-op
 }
 
-double Losange::getPerimetre() const {
-    return perimetre;
-}
+double Losange::getSurface() const { return surface; }
+double Losange::getPerimetre() const { return perimetre; }

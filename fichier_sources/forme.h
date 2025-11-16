@@ -1,14 +1,29 @@
-#pragma once   // ou bien #ifndef FORME_H ... #define FORME_H ... #endif
+#ifndef FORME_H
+#define FORME_H
+
+#pragma once
 
 class forme {
 public:
-    virtual ~forme() = default;
-    forme();
+    static int compteurFormes;
 
+    // Gestion compteur global
+    static void incrementerFormes() { compteurFormes++; }
+    static void decrementerFormes() { compteurFormes--; }
+
+    // Constructeur / destructeur
+    forme() { incrementerFormes(); }
+    virtual ~forme() { decrementerFormes(); }
+
+    // Interface
     virtual double getSurface() const = 0;
     virtual double getPerimetre() const = 0;
-    virtual void SaisirDimension();
-    virtual void SaisirDimension(double _dim1);
-    virtual void SaisirDimension(double _dim1, double _dim2);
-    virtual void SaisirDimension(double _dim1, double _dim2, double _dim3);
+
+    // Saisies (toutes déclarées pour forcer implémentation dans dérivées)
+    virtual void SaisirDimension() = 0;
+    virtual void SaisirDimension(double _dim1) = 0;
+    virtual void SaisirDimension(double _dim1, double _dim2) = 0;
+    virtual void SaisirDimension(double _dim1, double _dim2, double _dim3) = 0;
 };
+
+#endif // FORME_H

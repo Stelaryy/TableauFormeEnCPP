@@ -1,29 +1,31 @@
-// Auteur : Ahmed Boukra Bettayeb
-// Version : 2.0
-// Date : 14/10/2025
-// Classe Carre - Declaration
 #ifndef DEF_CARRE
 #define DEF_CARRE
 
 #pragma once
-#include <iostream>
 #include "Rectangle.h"
 
-
-class Carre : public Rectangle  {
+class Carre : public Rectangle {
 private:
-    //variable
-    double cote;
+    static int compteurCarre;
 
 public:
-    // Constructeur
-    Carre();
-    Carre(double cote);
+    // Constructeurs
+    Carre();             // Constructeur par défaut OBLIGATOIRE
+    Carre(double cote);  // Constructeur avec un côté unique
+
+    // Destructeur
     ~Carre();
+
+    // Méthodes de saisie
     void SaisirDimension() override;
     void SaisirDimension(double _dim1) override;
-    
+    void SaisirDimension(double _dim1, double _dim2) override;
+    void SaisirDimension(double _dim1, double _dim2, double _dim3) override;
+
+    // Gestion compteur
+    static int getCompteurCarre();
+    static void incrementerCompteur();
+    static void decrementerCompteur();
 };
+
 #endif
-
-

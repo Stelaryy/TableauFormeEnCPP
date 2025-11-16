@@ -1,92 +1,56 @@
-﻿// Auteur : Ahmed Boukra Bettayeb
-// Version : 3.2
-// Date : 08/11/2025
-// Classe Ellipse - Implémentation
-
-#include "ellipse.h"
+﻿#include "Ellipse.h"
 #include <iostream>
-#include <stdexcept>
 #include <cmath>
+#include <stdexcept>
 using namespace std;
 
 constexpr double PI = 3.14159265358979323846;
 
-// -----------------------------
-// Constructeur
-// -----------------------------
 Ellipse::Ellipse(double A, double B)
-    : GrandAxe(A), PetitAxe(B)
+    : GrandAxe(A), PetitAxe(B), surface(0), perimetre(0)
 {
-    if (A <= 0 || B <= 0)
-        throw invalid_argument("Les axes doivent etre positifs.");
-
+    if (A <= 0 || B <= 0) throw invalid_argument("Axes doivent etre positifs");
     CalculerSurface();
     CalculerPerimetre();
-
-    cout << "Creation d une ellipse : "
-         << "GrandAxe = " << GrandAxe
-         << ", PetitAxe = " << PetitAxe << endl;
+    cout << "Creation d'une Ellipse. a=" << GrandAxe << " b=" << PetitAxe
+         << ", total formes=" << forme::compteurFormes << endl;
 }
 
-// -----------------------------
-// Destructeur
-// -----------------------------
 Ellipse::~Ellipse() {
-    cout << "Destruction d une ellipse." << endl;
-}
-
-// -----------------------------
-// Méthodes protégées
-// -----------------------------
-void Ellipse::setGrandAxe(double A) {
-    if (A <= 0)
-        throw invalid_argument("Le grand axe doit être positif.");
-    GrandAxe = A;
-}
-
-void Ellipse::setPetitAxe(double B) {
-    if (B <= 0)
-        throw invalid_argument("Le petit axe doit être positif.");
-    PetitAxe = B;
+    cout << "Destruction d'une Ellipse." << endl;
 }
 
 void Ellipse::CalculerSurface() {
-    Surface = PI * GrandAxe * PetitAxe;
+    surface = PI * GrandAxe * PetitAxe;
 }
 
 void Ellipse::CalculerPerimetre() {
-    // Formule approchée de Ramanujan
-    Perimetre = PI * (3 * (GrandAxe + PetitAxe) -
-                      sqrt((3 * GrandAxe + PetitAxe) * (GrandAxe + 3 * PetitAxe)));
+    perimetre = PI * (3*(GrandAxe + PetitAxe) - sqrt((3*GrandAxe + PetitAxe)*(GrandAxe + 3*PetitAxe)));
 }
 
-// -----------------------------
-// Méthodes publiques
-// -----------------------------
 void Ellipse::SaisirDimension() {
-    cout << "Entrez le grand axe : ";
-    cin >> GrandAxe;
-    cout << "Entrez le petit axe : ";
-    cin >> PetitAxe;
-
-    if (GrandAxe <= 0 || PetitAxe <= 0)
-        throw invalid_argument("Les axes doivent etre positifs.");
-
-    CalculerSurface();
-    CalculerPerimetre();
+    double a,b;
+    do { cout << "Grand axe (>0): "; cin >> a; } while (a <= 0);
+    do { cout << "Petit axe (>0): "; cin >> b; } while (b <= 0);
+    GrandAxe = a; PetitAxe = b;
+    CalculerSurface(); CalculerPerimetre();
 }
 
-void Ellipse::SaisirDimension(double A, double B) {
-    setGrandAxe(A);
-    setPetitAxe(B);
-    CalculerSurface();
-    CalculerPerimetre();
+void Ellipse::SaisirDimension(double _dim1) {
+    // Saisir grand axe = _dim1, demander petit axe
+    GrandAxe = _dim1;
+    SaisirDimension();
 }
 
-double Ellipse::getSurface() const {
-    return Surface;
+void Ellipse::SaisirDimension(double _dim1, double _dim2) {
+    GrandAxe = _dim1;
+    PetitAxe = _dim2;
+    CalculerSurface(); CalculerPerimetre();
 }
 
-double Ellipse::getPerimetre() const {
-    return Perimetre;
+void Ellipse::SaisirDimension(double /*_d1*/, double /*_d2*/, double /*_d3*/) {
+    // non applicable (no-op)
 }
+
+double Ellipse::getSurface() const { return surface; }
+double Ellipse::getPerimetre() const { return perimetre; }

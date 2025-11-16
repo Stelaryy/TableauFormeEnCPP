@@ -1,41 +1,42 @@
-// Auteur : Ahmed Boukra Bettayeb
-// Version : 2.1
-// Date : 14/10/2025
-// Classe Losange - Déclaration
+#ifndef DEF_LOSANGE
+#define DEF_LOSANGE
 
 #pragma once
 #include "forme.h"
-#include <stdexcept>
 
 class Losange : public forme {
 private:
-    double d1 = 0.0;
-    double d2 = 0.0;
-    double cote = 0.0;
-    double angle = 0.0;
-    double surface = 0.0;
-    double perimetre = 0.0;
+    double d1;
+    double d2;
+    double cote;
+    double angle; // radians
+    double surface;
+    double perimetre;
 
     void SaisirDiagonal1();
     void SaisirDiagonal2();
     void SaisirCote();
     void SaisirAngle();
-
 protected:
     void setDiagonal1(double d);
     void setDiagonal2(double d);
     void setCote(double c);
     void setAngle(double a);
 
+    void CalculerSurface();
+    void CalculerPerimetre();
 public:
-    // Constructeurs
-    Losange();                                // par défaut
-    Losange(bool fromDiagonales);      // true → diagonales, false → côté + angle
+    Losange();
+    Losange(bool fromDiagonales);
     ~Losange();
 
-    // Méthodes
+    void SaisirDimension() override;
     void SaisirDimension(double _dim1) override;
     void SaisirDimension(double _dim1, double _dim2) override;
+    void SaisirDimension(double _dim1, double _dim2, double _dim3) override;
+
     double getSurface() const override;
     double getPerimetre() const override;
 };
+
+#endif

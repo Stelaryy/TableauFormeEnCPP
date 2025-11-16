@@ -1,99 +1,76 @@
-//	Auteur : Wilfrid Grassi
-//	Version : 1.1
-//	Date 13/09/2016
-//	Objet : Definition des methodes de la classe Rectangle 
-//			Calcul de Perimetre et de surface
-//			Instanciation statique des objets (pas de pointeurs)
-
-//#include "stdafx.h"
 #include "Rectangle.h"
+#include <iostream>
+
 using namespace std;
 
+int Rectangle::compteur = 0;
+
+void Rectangle::incrementerCompteur(){ compteur++; }
+void Rectangle::decrementerCompteur(){ compteur--; }
+int Rectangle::getCompteurRectangle(){ return compteur; }
+
 Rectangle::Rectangle(double Long, double Large)
+    : Longueur(Long), Largeur(Large), surface(0), perimetre(0)
 {
-	this->setLongueur(Long);
-	this->setLargeur(Large);
+    incrementerCompteur();
+    // le compteur global est déjà incrémenté par forme::forme()
+    CalculerSurface();
+    CalculerPerimetre();
+    cout << "Creation d'un Rectangle. Count=" << compteur
+         << ", total formes=" << forme::compteurFormes << endl;
 }
 
 Rectangle::~Rectangle()
 {
-	cout << "Suppression de la memoire d un objet Rectangle ..." << endl;
+    decrementerCompteur();
+    cout << "Suppression d'un Rectangle. Restants=" << compteur
+         << ", total formes=" << forme::compteurFormes << endl;
 }
 
-void Rectangle::setLongueur(double Long)
-{
-	this->Longueur = Long;
-	this->CalculerSurface();
-	this->CalculerPerimetre();
+void Rectangle::setLongueur(double Long) {
+    Longueur = Long;
+    CalculerSurface(); CalculerPerimetre();
+}
+void Rectangle::setLargeur(double Large) {
+    Largeur = Large;
+    CalculerSurface(); CalculerPerimetre();
 }
 
-void Rectangle::setLargeur(double Large)
-{
-	this->Largeur = Large;
-	this->CalculerSurface();
-	this->CalculerPerimetre();
+void Rectangle::SaisirLongueur() {
+    double L;
+    do { cout << "Entrez la longueur (>0): "; cin >> L; } while (L <= 0);
+    setLongueur(L);
+}
+void Rectangle::SaisirLargeur() {
+    double L;
+    do { cout << "Entrez la largeur (>0): "; cin >> L; } while (L <= 0);
+    setLargeur(L);
 }
 
-void Rectangle::SaisirLongueur()
-{
-	double Long;
-
-	do
-	{
-		cout << "Entrez la longueur du rectangle: " << endl;
-		cin >> Long;
-	} while (Long < 0.0);
-
-	this->Longueur = Long;
-	this->CalculerSurface();
-	this->CalculerPerimetre();
+void Rectangle::SaisirDimension() {
+    SaisirLongueur();
+    SaisirLargeur();
 }
 
-void Rectangle::SaisirLargeur()
-{
-	double Large;
-
-	do
-	{
-		cout << "Entrez la largeur du rectangle: " << endl;
-		cin >> Large;
-	} while (Large < 0.0);
-
-	this->Largeur = Large;
-	this->CalculerSurface();
-	this->CalculerPerimetre();
+void Rectangle::SaisirDimension(double _dim1) {
+    // Saisir longueur = _dim1, demander largeur
+    setLongueur(_dim1);
+    SaisirLargeur();
 }
 
-void Rectangle::SaisirDimension()
-{
-	this->SaisirLongueur();
-	this->SaisirLargeur();
+void Rectangle::SaisirDimension(double _dim1, double _dim2) {
+    setLongueur(_dim1);
+    setLargeur(_dim2);
 }
 
-void Rectangle::SaisirDimension(double _dim1, double _dim2)
-{
-	this->setLongueur(_dim1);
-	this->setLargeur(_dim2);
+void Rectangle::SaisirDimension(double _dim1, double _dim2, double _dim3) {
+    // Pas applicable -> on prend les 2 premières valeurs
+    setLongueur(_dim1);
+    setLargeur(_dim2);
 }
 
-void Rectangle::CalculerPerimetre()
-{
-	this->Perimetre = (2 * this->Longueur) + (2 * this->Largeur);
-}
+void Rectangle::CalculerSurface(){ surface = Longueur * Largeur; }
+void Rectangle::CalculerPerimetre(){ perimetre = 2*(Longueur + Largeur); }
 
-void Rectangle::CalculerSurface()
-{
-	this->surface = this->Longueur * this->Largeur;
-}
-
-double Rectangle::getSurface() const
-{
-	return(this->surface);
-}
-
-double Rectangle::getPerimetre() const
-{
-	return(this->Perimetre);
-}
-
-
+double Rectangle::getSurface() const { return surface; }
+double Rectangle::getPerimetre() const { return perimetre; }
