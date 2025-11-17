@@ -66,9 +66,7 @@ forme* creerForme(int choix)
         return f;
     }
     case 7: {
-        auto* f = new HexagoneIrregulier();
-        f->SaisirDimension();
-        return f;
+        return new HexagoneIrregulier();
     }
     default:
         return nullptr;

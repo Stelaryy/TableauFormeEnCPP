@@ -36,7 +36,11 @@ void HexagoneIrregulier::setSommet(int index, double x, double y){
 
 void HexagoneIrregulier::SaisirSommet(int index){
     double x,y;
-    cout << "Sommet " << index+1 << " (x y): "; cin >> x >> y;
+    cout << "Sommet " << index+1 << " (x): ";
+    cin >> x;
+    cout << "Sommet " << index+1 << " (y): ";
+    cin >> y;
+
     setSommet(index,x,y);
 }
 
