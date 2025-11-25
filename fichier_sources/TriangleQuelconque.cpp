@@ -1,4 +1,8 @@
-﻿#include "TriangleQuelconque.h"
+﻿// Auteur : Ahmed Boukra Bettayeb
+// class TriangleQuelconque
+// date : 2025-11-25
+
+#include "TriangleQuelconque.h"
 #include <iostream>
 #include <cmath>
 #include <stdexcept>

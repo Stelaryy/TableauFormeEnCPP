@@ -1,4 +1,8 @@
-﻿#include "Cercle.h"
+﻿// Auteur : Ahmed Boukra Bettayeb
+// class Cercle
+// date : 2025-11-25
+
+#include "Cercle.h"
 #include <iostream>
 #include <stdexcept>
 #include <cmath>

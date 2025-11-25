@@ -1,4 +1,8 @@
-﻿#include "Ellipse.h"
+﻿// Auteur : Ahmed Boukra Bettayeb
+// class Ellipse
+// date : 2025-11-25
+
+#include "Ellipse.h"
 #include <iostream>
 #include <cmath>
 #include <stdexcept>

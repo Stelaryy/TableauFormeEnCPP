@@ -1,3 +1,7 @@
+// Auteur : Ahmed Boukra Bettayeb
+// class Losange
+// date : 2025-11-25
+
 #include "Losange.h"
 #include <iostream>
 #include <cmath>

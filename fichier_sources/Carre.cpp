@@ -1,3 +1,7 @@
+// Auteur : Ahmed Boukra Bettayeb
+// class Carre
+// date : 2025-11-25
+
 #include "Carre.h"
 #include <iostream>
 using namespace std;

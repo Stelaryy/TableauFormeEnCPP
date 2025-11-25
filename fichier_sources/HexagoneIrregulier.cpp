@@ -1,3 +1,7 @@
+// Auteur : Ahmed Boukra Bettayeb
+// class HexagoneIrregulier
+// date : 2025-11-25
+
 #include "HexagoneIrregulier.h"
 #include <iostream>
 #include <cmath>

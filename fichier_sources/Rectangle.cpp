@@ -1,3 +1,7 @@
+// Auteur : Ahmed Boukra Bettayeb
+// class Rectangle
+// date : 2025-11-25
+
 #include "Rectangle.h"
 #include <iostream>
 

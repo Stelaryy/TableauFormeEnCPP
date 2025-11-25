@@ -1,3 +1,7 @@
+// Auteur : Ahmed Boukra Bettayeb
+// class GestionFormes (Main)
+// date : 2025-11-25
+
 #include <iostream>
 #include <iomanip>
 #include "forme.h"
